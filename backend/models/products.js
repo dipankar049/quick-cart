@@ -22,6 +22,11 @@ const productSchema = new mongoose.Schema({
     fun_fact: {
         type: String, 
         required: true,
+    },
+    vendor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
     }
 });
 

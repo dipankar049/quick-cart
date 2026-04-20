@@ -21,7 +21,8 @@ const addProduct = async(req, res) => {
             price,
             stock,
             category: category.trim(),
-            fun_fact: fun_fact.trim()
+            fun_fact: fun_fact.trim(),
+            vendor: req.userId,
         });
 
         const product = await newProduct.save();
