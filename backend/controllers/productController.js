@@ -6,15 +6,15 @@ const addProduct = async(req, res) => {
         const { name, price, stock, category, fun_fact } = req.body;
 
         if(!name.trim() || !price || !stock || !category.trim() || !fun_fact.trim()) {
-            return res.status(400).json({ msg: "All fields are required" });
+            return res.status(400).json({ success: false, error: "All fields are required" });
         }
 
         if(price < 0) {
-            return res.status(400).json({ msg: "Price can't be less than 0" });
+            return res.status(400).json({ success: false, error: "Price can't be less than 0" });
         }
 
         if(stock < 1) {
-            return res.status(400).json({ msg: "Stock can't be less than 1" });
+            return res.status(400).json({ success: false, error: "Stock can't be less than 1" });
         }
 
         const newProduct = new Products({
@@ -28,9 +28,9 @@ const addProduct = async(req, res) => {
 
         const product = await newProduct.save();
 
-        res.status(201).json({ newProduct: product, msg: "Product added successfully" });
+        res.status(201).json({ success: true, data: product });
     } catch(err) {
-        res.status(500).json({ msg: "Server error, please try again later" });
+        res.status(500).json({ success: false, error: "Server error, please try again later" });
     }
 }
 
@@ -38,9 +38,9 @@ const getAllProduct = async(req, res) => {
     try {
         const products = await Products.find().limit(50);
 
-        res.status(200).json({ products });
+        res.status(200).json({ success: true, data: products });
     } catch(err) {
-        res.status(500).json({ msg: "Server error, please try again later" });
+        res.status(500).json({ success: false, error: "Server error, please try again later" });
     }
 }
 
@@ -51,12 +51,12 @@ const getSingleProduct = async(req, res) => {
         const product = await Products.findById(id);
 
         if(!product) {
-            return res.status(404).json({ msg: "Product not found" });
+            return res.status(404).json({ success: false, error: "Product not found" });
         }
 
-        res.status(200).json({ product });
+        res.status(200).json({ success: true, data: product });
     } catch(err) {
-        res.status(500).json({ msg: "Server error, please try again later" });
+        res.status(500).json({ success: false, error: "Server error, please try again later" });
     }
 }
 
