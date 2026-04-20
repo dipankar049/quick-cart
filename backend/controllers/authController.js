@@ -29,7 +29,7 @@ const register = async(req, res) => {
         const user = await newUser.save();
 
         const token = jwt.sign({
-            data: { id: user._id }
+                id: user._id 
             }, process.env.SecretKey);
 
         res.status(201).json({
@@ -69,7 +69,7 @@ const login = async(req, res) => {
         }
 
         const token = jwt.sign({
-            data: { id: user._id }
+                id: user._id
             }, process.env.SecretKey);
 
         res.status(201).json({
